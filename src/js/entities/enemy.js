@@ -87,11 +87,12 @@ g.Enemy.prototype.collide = function () {
 };
 
 g.Enemy.prototype.step = function () {
-  this.x += this.vx;
-  this.y += this.vy;
-  this.distanceTraveled += this.vx + this.vy;
+  this.x += this.vx * this.state.time.dtNorm;
+  this.y += this.vy * this.state.time.dtNorm;
+  this.distanceTraveled +=
+    this.vx * this.state.time.dtNorm + this.vy * this.state.time.dtNorm;
   if (Math.abs(this.distanceTraveled) > 490) {
-    this.opacity -= 0.025;
+    this.opacity -= 0.025 * this.state.time.dtNorm;
     g.css(this.dom, {
       background: "#fff",
     });

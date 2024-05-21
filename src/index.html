@@ -2,30 +2,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Avoid Rage | Ludum Dare 31</title>
+    <title>Avoid Rage</title>
     <meta
       name="description"
-      content="Minimal reflex game where you must avoid enemies coming at you from opposing tracks - Made for Ludum Dare 31 - Entire Game on One Screen"
+      content="Minimal reflex game where you must avoid enemies coming at you from opposing tracks."
     />
-    <meta property="og:url" content="http://jackrugile.com/avoid-rager" />
-    <meta property="og:title" content="Avoid Rage | Ludum Dare 31" />
-    <meta
-      property="og:description"
-      content="Minimal reflex game where you must avoid enemies coming at you from opposing tracks - Made for Ludum Dare 31 - Entire Game on One Screen"
-    />
-    <meta property="og:site_name" content="Avoid Rage" />
-    <meta
-      property="og:image"
-      content="http://jackrugile.com/avoid-rage/images/fb.png?v=1"
-    />
-    <meta property="og:type" content="website" />
     <link
       rel="shortcut icon"
       type="image/x-icon"
       href="images/favicon.ico?v=1"
     />
-    <link href="css/main.min.css" rel="stylesheet" />
-    <!--<link href="css/main.css" rel="stylesheet">-->
+    <link href="scss/imports.scss" rel="stylesheet" />
   </head>
   <body>
     <div class="game">
@@ -67,11 +54,11 @@
         </div>
         <div class="credits-wrap">
           Built for
-          <a href="http://ludumdare.com/compo/" target="_blank">Ludum Dare</a>
+          <a href="https://ludumdare.com/compo/" target="_blank">Ludum Dare</a>
           31<br />
           Entire Game on One Screen<br />
-          Made by <a href="http://jackrugile.com" target="_blank">Jack Rugile</a
-          ><br />
+          Made by
+          <a href="https://jackrugile.com" target="_blank">Jack Rugile</a><br />
         </div>
         <div class="stats-wrap">
           <span class="stats-label">Moves</span>
@@ -89,17 +76,15 @@
         WASD to Move
       </div>
     </div>
-    <script src="js/main.min.js"></script>
-    <!--<script src="js/vendor/modernizr.js"></script>
-    <script src="js/vendor/howler.js"></script>
-    <script src="js/game/g.js"></script>
-    <script src="js/game/storage.js"></script>
-    <script src="js/game/group.js"></script>
-    <script src="js/game/pool.js"></script>
-    <script src="js/game/util.js"></script>
-    <script src="js/entities/enemy.js"></script>
-    <script src="js/entities/hero.js"></script>
-    <script src="js/states/play.js"></script>
-    <script src="js/game.js"></script>-->
+    <script type="module" src="js/vendor/howler.js"></script>
+    <script type="module" src="js/game/g.js"></script>
+    <script type="module" src="js/game/storage.js"></script>
+    <script type="module" src="js/game/group.js"></script>
+    <script type="module" src="js/game/pool.js"></script>
+    <script type="module" src="js/game/util.js"></script>
+    <script type="module" src="js/entities/enemy.js"></script>
+    <script type="module" src="js/entities/hero.js"></script>
+    <script type="module" src="js/states/play.js"></script>
+    <script type="module" src="js/game.js"></script>
   </body>
 </html>

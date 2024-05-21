@@ -83,6 +83,10 @@ g.Hero.prototype.onKeydown = function (e) {
     g.addClass(this.state.dom.instructions, "hidden");
     this.state.time.start = Date.now();
     this.state.time.last = Date.now();
+    if (!g.musicHasPlayed) {
+      g.audio.music.play();
+      g.musicHasPlayed = true;
+    }
   }
   if (triggered) {
     g.audio.move.play();
@@ -115,8 +119,10 @@ g.Hero.prototype.onKeyup = function (e) {
 };
 
 g.Hero.prototype.move = function () {
-  this.x += (g.tileTargetMap[this.tileTarget].x - this.x) * this.easing;
-  this.y += (g.tileTargetMap[this.tileTarget].y - this.y) * this.easing;
+  let lerp = 1 - Math.exp(-this.easing * this.state.time.dtNorm);
+  this.x += (g.tileTargetMap[this.tileTarget].x - this.x) * lerp;
+  this.y += (g.tileTargetMap[this.tileTarget].y - this.y) * lerp;
+
   this.hitbox = {
     x: this.x + this.hitboxOffset,
     y: this.y + this.hitboxOffset,

@@ -1052,13 +1052,13 @@ Lines
 }
 
 .line-vertical.line-0 {
-  left: $width / 2 - $size - 1;
+  left: calc($width / 2) - $size - 1;
 }
 .line-vertical.line-1 {
-  left: $width / 2 - 1;
+  left: calc($width / 2) - 1;
 }
 .line-vertical.line-2 {
-  left: $width / 2 + $size - 1;
+  left: calc($width / 2) + $size - 1;
 }
 
 .line-horizontal {
@@ -1068,13 +1068,13 @@ Lines
 }
 
 .line-horizontal.line-0 {
-  top: $height / 2 - $size - 1;
+  top: calc($height / 2) - $size - 1;
 }
 .line-horizontal.line-1 {
-  top: $height / 2 - 1;
+  top: calc($height / 2) - 1;
 }
 .line-horizontal.line-2 {
-  top: $height / 2 + $size - 1;
+  top: calc($height / 2) + $size - 1;
 }
 
 /*==============================================================================
@@ -1168,13 +1168,13 @@ Enemies
 
 .enemy {
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.5), 0 0 0 rgba(255, 255, 255, 1);
-  height: $size / 3;
+  height: calc($size / 3);
   left: 0;
   position: absolute;
   top: 0;
 
   transform-origin: 0 0;
-  width: $size / 3;
+  width: calc($size / 3);
   -webkit-filter: blur(0);
   &.dead {
     box-shadow: 0 3px 0 rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 255, 255, 1);
@@ -1192,12 +1192,12 @@ Hero
 .hero {
   background: #fff;
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.4), 0 0 20px #fff;
-  height: $size / 3;
+  height: calc($size / 3);
   left: 0;
   position: absolute;
   top: 0;
   transform-origin: 0 0;
-  width: $size / 3;
+  width: calc($size / 3);
 }
 
 /*==============================================================================

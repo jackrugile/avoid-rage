@@ -4,7 +4,7 @@ Play State
 
 ==============================================================================*/
 
-var StatePlay = function () {};
+g.StatePlay = function () {};
 
 /*==============================================================================
 
@@ -12,7 +12,7 @@ Initialize
 
 ==============================================================================*/
 
-StatePlay.prototype.init = function () {
+g.StatePlay.prototype.init = function () {
   // dom
   this.dom = {};
   this.dom.tiles = g.qS(".tile");
@@ -43,7 +43,7 @@ On Keydown
 
 ==============================================================================*/
 
-StatePlay.prototype.onKeydown = function (e) {
+g.StatePlay.prototype.onKeydown = function (e) {
   var code = e.keyCode ? e.keyCode : e.which;
   if (code === 77 && this.canKeydown) {
     var muted = g.storage.get("mute");
@@ -51,7 +51,7 @@ StatePlay.prototype.onKeydown = function (e) {
     if (muted) {
       g.storage.set("mute", 0);
       Howler.unmute();
-      g.audio.music.stop();
+      g.audio.music.pause();
       g.audio.music.play();
     } else {
       g.storage.set("mute", 1);
@@ -66,7 +66,7 @@ On Keydown
 
 ==============================================================================*/
 
-StatePlay.prototype.onKeyup = function (e) {
+g.StatePlay.prototype.onKeyup = function (e) {
   var code = e.keyCode ? e.keyCode : e.which;
   if (code === 77) {
     this.canKeydown = 1;
@@ -79,7 +79,7 @@ Restart
 
 ==============================================================================*/
 
-StatePlay.prototype.restart = function () {
+g.StatePlay.prototype.restart = function () {
   // time
   this.time = {
     start: Date.now(),
@@ -88,6 +88,7 @@ StatePlay.prototype.restart = function () {
     current: 0,
     elapsed: 0,
     tick: 0,
+    dtNorm: 1,
   };
 
   // spawner
@@ -139,12 +140,13 @@ Step Time
 
 ==============================================================================*/
 
-StatePlay.prototype.stepTime = function () {
+g.StatePlay.prototype.stepTime = function () {
   this.time.current = Date.now();
   this.time.diff = this.time.current - this.time.last;
   this.time.elapsed = this.time.current - this.time.start;
-  this.time.tick++;
   this.time.last = this.time.current;
+  this.time.dtNorm = this.time.diff / (1000 / 60);
+  this.time.tick += this.time.dtNorm;
 
   g.storage.set("totalTime", g.storage.get("totalTime") + this.time.diff);
   this.dom.statsTime.textContent = g.msToString(g.storage.get("totalTime"));
@@ -156,11 +158,11 @@ Step Spawner
 
 ==============================================================================*/
 
-StatePlay.prototype.stepSpawner = function () {
-  this.spawner.tick++;
+g.StatePlay.prototype.stepSpawner = function () {
+  this.spawner.tick += this.time.dtNorm;
   if (
     this.time.tick >= this.spawner.delay &&
-    this.spawner.tick % this.spawner.max === 0
+    this.spawner.tick >= this.spawner.max
   ) {
     this.enemies.create({
       state: this,
@@ -175,8 +177,8 @@ Step Level
 
 ==============================================================================*/
 
-StatePlay.prototype.stepLevel = function () {
-  this.level.tick++;
+g.StatePlay.prototype.stepLevel = function () {
+  this.level.tick += this.time.dtNorm;
   if (this.level.tick >= this.level.max) {
     this.level.tick = 0;
     this.spawner.max -= 1;
@@ -194,7 +196,7 @@ Increase Score
 
 ==============================================================================*/
 
-StatePlay.prototype.increaseScore = function () {
+g.StatePlay.prototype.increaseScore = function () {
   this.score++;
   this.dom.scoreCurrent.textContent = g.pad(this.score, 3);
   this.dom.scoreBest.textContent = g.pad(
@@ -209,9 +211,8 @@ Gameover
 
 ==============================================================================*/
 
-StatePlay.prototype.gameover = function () {
-  g.audio.death1.play();
-  g.audio.death2.play();
+g.StatePlay.prototype.gameover = function () {
+  g.audio.death.play();
 
   this.enemies.each("destroy");
 
@@ -234,7 +235,7 @@ Step
 
 ==============================================================================*/
 
-StatePlay.prototype.step = function () {
+g.StatePlay.prototype.step = function () {
   if (this.hero && !this.hero.dead) {
     if (this.playing) {
       this.stepTime();
@@ -253,7 +254,7 @@ Draw
 
 ==============================================================================*/
 
-StatePlay.prototype.draw = function () {
+g.StatePlay.prototype.draw = function () {
   if (this.hero && !this.hero.dead) {
     this.enemies.each("draw");
     this.hero.draw();

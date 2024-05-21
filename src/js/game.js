@@ -67,6 +67,7 @@ g.init = function () {
 
   this.audioLoaded = 0;
   this.audioTotal = 0;
+  this.musicHasPlayed = false;
 
   if (g.storage.get("mute")) {
     Howler.mute();
@@ -76,8 +77,8 @@ g.init = function () {
 
   g.audio.music = new Howl({
     urls: ["audio/music.ogg", "audio/music.mp3"],
-    volume: 0.6,
-    autoplay: true,
+    volume: 0.5,
+    autoplay: false,
     loop: true,
     onload: function () {
       g.loadAudio();
@@ -94,18 +95,9 @@ g.init = function () {
   });
   this.audioTotal++;
 
-  g.audio.death1 = new Howl({
-    urls: ["audio/death1.ogg", "audio/death1.mp3"],
-    volume: 0.8,
-    onload: function () {
-      g.loadAudio();
-    },
-  });
-  this.audioTotal++;
-
-  g.audio.death2 = new Howl({
-    urls: ["audio/death2.ogg", "audio/death2.mp3"],
-    volume: 0.8,
+  g.audio.death = new Howl({
+    urls: ["audio/death.ogg", "audio/death.mp3"],
+    volume: 0.6,
     onload: function () {
       g.loadAudio();
     },
@@ -117,7 +109,7 @@ g.loadAudio = function () {
   g.audioLoaded++;
   if (g.audioLoaded >= g.audioTotal) {
     g.addClass(g.dom.html, "loaded");
-    g.play = new StatePlay();
+    g.play = new g.StatePlay();
     g.play.init();
     g.onResize();
     g.step();
